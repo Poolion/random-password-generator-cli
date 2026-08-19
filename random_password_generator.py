@@ -1,25 +1,13 @@
-# random_password_generator.py
-import string
 import random
+import string
 
-def generate_password(length=12, use_numbers=True, use_special_chars=True):
-    characters = string.ascii_letters
-    if use_numbers:
-        characters += string.digits
-    if use_special_chars:
-        characters += string.punctuation
-
-    password = ''.join(random.choice(characters) for _ in range(length))
-    return password
-
-def main():
-    print("Random Password Generator")
-    length = int(input("Enter the length of the password (default is 12): ") or 12)
-    use_numbers = input("Include numbers? (y/n, default is y): ").lower() != 'n'
-    use_special_chars = input("Include special characters? (y/n, default is y): ").lower() != 'n'
-
-    password = generate_password(length, use_numbers, use_special_chars)
-    print(f"Generated password: {password}")
+def generate_password(length=12):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    return ''.join(random.choice(characters) for _ in range(length))
 
 if __name__ == '__main__':
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description="Generate a random password.")
+    parser.add_argument("length", type=int, nargs="?", default=12, help="Length of the password")
+    args = parser.parse_args()
+    print(generate_password(args.length))
